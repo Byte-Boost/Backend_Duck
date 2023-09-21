@@ -1,9 +1,0 @@
-[submodule "Database_Duck"]
-	path = Database_Duck
-	url = https://github.com/Byte-Boost/Database_Duck
-[submodule "Frontend_Duck"]
-	path = Frontend_Duck
-	url = https://github.com/Byte-Boost/Frontend_Duck
-[submodule "Backend_Duck"]
-	path = Backend_Duck
-	url = https://github.com/Byte-Boost/Backend_Duck
