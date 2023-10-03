@@ -1,4 +1,4 @@
-package net.byteboost.duck.objectsList;
+package net.byteboost.duck.models;
 
 /**
  *
