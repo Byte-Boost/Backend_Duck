@@ -42,7 +42,7 @@ public class RegisterController implements Initializable {
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
 //                                DButils.addUser(tf_username.getText(),password);
-                                GUIutils.changeScene(event,"/fxml/login.fxml","Login",tf_username.getText(),pf_password.getText(),null);
+                                GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",tf_username.getText(),pf_password.getText(),null);
 
 
                     } else {
@@ -62,7 +62,7 @@ public class RegisterController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event, "/fxml/login.fxml","login",null,null,null);
+                GUIutils.changeScene(event, "/fxml/login.fxml","Duck - Login",null,null,null);
             }
         });
     }

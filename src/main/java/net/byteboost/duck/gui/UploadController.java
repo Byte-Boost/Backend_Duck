@@ -55,7 +55,7 @@ public class UploadController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             if (selectedFile != null) {
-                GUIutils.changeScene(event,"/fxml/aichat.fxml","Chat",user,null,doc);
+                GUIutils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat",user,null,doc);
             }
 
         }
@@ -64,7 +64,7 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIutils.changeScene(event,"/fxml/login.fxml","Login",null,null,null);
+            GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",null,null,null);
         }
     });
     }

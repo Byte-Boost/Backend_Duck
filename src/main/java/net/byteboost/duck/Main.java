@@ -22,7 +22,7 @@ public class Main extends Application{
         final boolean resizable = primaryStage.isResizable();
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/fxml/login.fxml")));
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Duck - Login");
         primaryStage.setResizable(!resizable);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

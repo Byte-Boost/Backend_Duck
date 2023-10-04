@@ -26,13 +26,13 @@ public class LoginController implements Initializable {
         btn_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event,"/fxml/upload.fxml","Upload",tf_username.getText(), pf_password.getText(), null);
+                GUIutils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",tf_username.getText(), pf_password.getText(), null);
             }
         });
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event,"/fxml/register.fxml","Register",null,null,null);
+                GUIutils.changeScene(event,"/fxml/register.fxml","Duck - Register",null,null,null);
             }
         });
     }
