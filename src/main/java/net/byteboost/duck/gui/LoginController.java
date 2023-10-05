@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event,"/fxml/register.fxml","Duck - Register",null,null,null);
+                GUIutils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null,null,null);
             }
         });
     }
