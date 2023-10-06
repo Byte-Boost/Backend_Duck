@@ -10,20 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.byteboost.duck.utils.GUIutils;
+import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.GUIUtils;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UploadController implements Initializable {
-    private static String user;
-    private static String access;
     private static Document doc;
-    private static File selectedFile;
-    public static void saveUserInformation(String username){
-        user = username;
-    }
+    public static File selectedFile;
     @FXML
     private Label selectedFileField;
     @FXML
@@ -55,7 +51,7 @@ public class UploadController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             if (selectedFile != null) {
-                GUIutils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat",user,null,doc);
+                GUIUtils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat",doc);
             }
 
         }
@@ -64,7 +60,7 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",null,null,null);
+            GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
         }
     });
     }

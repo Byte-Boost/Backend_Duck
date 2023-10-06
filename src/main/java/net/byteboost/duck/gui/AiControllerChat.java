@@ -8,33 +8,33 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import net.byteboost.duck.utils.AIutils;
+import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.AIUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import net.byteboost.duck.utils.DButils;
 
-import java.sql.*;
-import java.time.LocalDate;
+import net.byteboost.duck.utils.DBUtils;
+import net.byteboost.duck.utils.GUIUtils;
+
+
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import static net.byteboost.duck.utils.DButils.getConnection;
-
-
 public class AiControllerChat implements Initializable {
-    private static String user;
+    private static final User localuser = LoginController.user;
     private static Document doc;
-    public static void saveUserInformation(String username, Document document){
-        user = username;
-        doc = document;
-    }
+
     @FXML
     private Button btn_send;
     @FXML
     private TextField tf_question;
     @FXML
     private VBox chat;
+    @FXML
+    private Button test;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,8 +43,8 @@ public class AiControllerChat implements Initializable {
             public void handle(ActionEvent event) {
 
                 //Adiciona registro da pergunta no banco
-                if (!tf_question.getText().trim().isEmpty()){
-                    DButils.AddRegistry(userID(user),UploadController.selectedFile.getName(),Time.valueOf(String.valueOf(LocalDate.now())));
+                if (!tf_question.getText().trim().isEmpty()) {
+                    DBUtils.AddRegistry(localuser.getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
                 }
 
                 //Criação de labels pergunta no chat
@@ -59,7 +59,7 @@ public class AiControllerChat implements Initializable {
                 chat.getChildren().add(hBoxQuestion);
 
                 //Criação de labels resposta do bot no chat
-                Label response = new Label(AIutils.loadIntoHugging(doc, tf_question.getText()));
+                Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
                 HBox hBoxResponse = new HBox();
 
                 hBoxResponse.getChildren().add(response);
@@ -70,23 +70,12 @@ public class AiControllerChat implements Initializable {
 
             }
         });
-    }
-    int userID(String user){
-        String sql = "SELECT user_id FROM users WHERE username=?";
-        try {
-            Connection cn = getConnection();
-            PreparedStatement stmt = cn.prepareStatement(sql);
-            ResultSet rs;
-
-            stmt.setString(1,user);
-
-            rs = stmt.executeQuery();
-
-            return rs.getInt(1);
-            
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-
+        test.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIUtils.changeScene(event,"/fxml/register.fxml","teste",null);
+            }
+        });
     }
 }
+

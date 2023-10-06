@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import net.byteboost.duck.utils.GUIutils;
+import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.DBUtils;
+import net.byteboost.duck.utils.GUIUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,9 +42,8 @@ public class SignUpController implements Initializable {
 
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
-//                              DButils.addUser(tf_username.getText(),password);
-                                GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",tf_username.getText(),pf_password.getText(),null);
-
+                        DBUtils.addUser(new User(tf_username.getText(),password));
+                        GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
 
                     } else {
 
@@ -61,7 +62,7 @@ public class SignUpController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event, "/fxml/login.fxml","Duck - Login",null,null,null);
+                GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login",null);
             }
         });
     }

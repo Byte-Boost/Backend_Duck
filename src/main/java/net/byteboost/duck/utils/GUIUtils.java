@@ -17,37 +17,15 @@ import java.io.IOException;
 
 public class GUIUtils {
 
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, User user, Document doc){
+    public static void changeScene(ActionEvent event, String fxmlFile, String title, Document doc){
         Parent root = null;
-        if (user != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(GUIUtils.class.getResource(fxmlFile));
-                root = loader.load();
-                if(fxmlFile.equals("/fxml/aichat.fxml")){
-//                    AiControllerChat aictrl = loader.getController();
-                    AiControllerChat.saveUserInformation(user,doc);
-                }
-                if (fxmlFile.equals("/fxml/upload.fxml")){
-//                    UploadController upctrl = loader.getController();
-                    UploadController.saveUserInformation(user);
-                }
-                if (fxmlFile.equals("/fxml/signup.fxml")){
-//                    RegisterController rgctrl = loader.getController();
-                    RegisterController.saveUserInformation(user);
-                }
-
-            }catch(IOException exception){
-                exception.printStackTrace();
-            }
-        }
-        else {
             try{
                 FXMLLoader loader = new FXMLLoader(GUIUtils.class.getResource(fxmlFile));
                 root = loader.load();
             }catch (IOException exception){
                 exception.printStackTrace();
             }
-        }
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(new Scene(root));

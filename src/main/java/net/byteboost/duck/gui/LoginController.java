@@ -7,12 +7,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import net.byteboost.duck.utils.GUIutils;
+
+import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.DBUtils;
+import net.byteboost.duck.utils.GUIUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    public static User user;
     @FXML
     private TextField tf_username;
     @FXML
@@ -23,16 +27,19 @@ public class LoginController implements Initializable {
     private Button btn_register;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         btn_login.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",tf_username.getText(), pf_password.getText(), null);
+                user = new User(tf_username.getText(),pf_password.getText());
+                DBUtils.logInUser(event,user);
             }
         });
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null,null,null);
+                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
             }
         });
     }
