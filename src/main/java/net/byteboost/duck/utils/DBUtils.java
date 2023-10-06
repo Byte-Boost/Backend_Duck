@@ -1,14 +1,14 @@
 package net.byteboost.duck.utils;
 
-import net.byteboost.duck.keys.DBkeys;
+import net.byteboost.duck.keys.DBKeys;
 
 import java.sql.*;
 
-public class DButils {
+public class DBUtils {
 
     public static Connection getConnection() throws SQLException {
         try {
-            return DriverManager.getConnection(DBkeys.getSQLDatabase(), DBkeys.getSQLUser(), DBkeys.getSQLPassword());
+            return DriverManager.getConnection(DBKeys.getSQLDatabase(), DBKeys.getSQLUser(), DBKeys.getSQLPassword());
         }catch (SQLException exception){
             throw new RuntimeException(exception);
         }
@@ -48,6 +48,20 @@ public class DButils {
                 
             }catch (SQLException e){
                 throw  new RuntimeException(e);
+            }
+        }
+        public static String getActivityInfo(String info, int user_id){
+            String sql = "SELECT ? FROM activity_register WHERE user_id=?";
+            try{
+
+                Connection connection = getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1,info);
+                stmt.setInt(2,user_id);
+                ResultSet rs = stmt.executeQuery(sql);
+                return rs.getString(1);
+            }catch (SQLException exception){
+                throw new RuntimeException(exception);
             }
         }
 
