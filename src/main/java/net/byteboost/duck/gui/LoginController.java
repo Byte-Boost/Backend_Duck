@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import net.byteboost.duck.utils.DButils;
 import net.byteboost.duck.utils.GUIutils;
 
 import java.net.URL;
@@ -26,7 +27,7 @@ public class LoginController implements Initializable {
         btn_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",tf_username.getText(), pf_password.getText(), null);
+                DButils.logInUser(event,tf_username.getText(),pf_password.getText());
             }
         });
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
