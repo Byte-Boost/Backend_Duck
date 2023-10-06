@@ -8,7 +8,7 @@ public class DBKeys {
     private static String SQLUser = "";
     private static String SQLPassword = "";
 
-    private static String SQLDatabase = "jdbc:mysql://localhost:3306/";
+    private static String SQLDatabase = "jdbc:mysql://localhost:3306/duck";
 
     public static String getSQLUser(){
         return SQLUser;
