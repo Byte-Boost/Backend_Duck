@@ -41,7 +41,7 @@ public class RegisterController implements Initializable {
 
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
-//                                DButils.addUser(tf_username.getText(),password);
+                                DButils.addUser(tf_username.getText(),password);
                                 GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",tf_username.getText(),pf_password.getText(),null);
 
 
