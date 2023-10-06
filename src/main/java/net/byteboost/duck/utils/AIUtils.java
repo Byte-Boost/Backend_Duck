@@ -15,7 +15,7 @@ import net.byteboost.duck.keys.ApiKeys;
 
 import static java.time.Duration.ofSeconds;
 
-public class AIutils {
+public class AIUtils {
     public static String loadIntoHugging(Document file, String question){
 
         EmbeddingModel embeddingModel = HuggingFaceEmbeddingModel.builder()

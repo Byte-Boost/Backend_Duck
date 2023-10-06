@@ -1,69 +1,54 @@
 package net.byteboost.duck.gui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import net.byteboost.duck.utils.DButils;
-import net.byteboost.duck.utils.GUIutils;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import net.byteboost.duck.models.User;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static net.byteboost.duck.utils.DBUtils.getActivityInfo;
+import static net.byteboost.duck.utils.DBUtils.getConnection;
 
 public class RegisterController implements Initializable {
     @FXML
-    private TextField tf_username;
-    @FXML
-    private PasswordField pf_password;
-    @FXML
-    private PasswordField pf_confirm;
-    @FXML
-    private Button btn_register;
-    @FXML
-    private Button btn_back;
-    @FXML
-    private Label lb_notfilled;
+    private VBox register;
 
+    private static final User localuser = LoginController.user;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        btn_register.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!tf_username.getText().trim().isEmpty() && !pf_password.getText().trim().isEmpty() && !pf_confirm.getText().trim().isEmpty()) {
 
-                    String confirm = pf_confirm.getText();
-                    String password = pf_password.getText();
+        register.setSpacing(10);
+        for (int i = 0 ;i < getActivitySize();i++){
+            Label registry = new Label("Titulo do documento: "+ getActivityInfo("document_title","registry_id", i+1) + " | " + " acessado por : " + localuser.getUsername() +  " | " + "Na data: " + getActivityInfo("access_date","registry_id",i+1) );
+            HBox hBox = new HBox();
+            hBox.getChildren().add(registry);
+            register.getChildren().add(hBox);
+        }
+    }
+    int getActivitySize(){
+        String sql = "SELECT COUNT(*) FROM activity_register";
+        try{
 
-                    if (confirm.equals(password)) {
-                        System.out.println("Sucesso! As senhas coincidem.");
-                                DButils.addUser(tf_username.getText(),password);
-                                GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",tf_username.getText(),pf_password.getText(),null);
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            int rownum = rs.getInt(1);
+            rs.close();
+            stmt.close();
+            connection.close();
+            return rownum;
 
-
-                    } else {
-
-                        pf_confirm.getStyleClass().add("not-filled");
-                        pf_password.getStyleClass().add("not-filled");
-                        lb_notfilled.setText("Erro! As senhas não coincidem.");
-                        System.out.println(confirm + "," + password);
-
-                        System.out.println("Erro! As senhas não coincidem.");
-                    }
-                } else {
-                    System.out.println("Erro! Os campos se encontram vazios.");
-                }
-            }
-        });
-        btn_back.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                GUIutils.changeScene(event, "/fxml/login.fxml","Duck - Login",null,null,null);
-            }
-        });
+        }catch (SQLException exception){
+            throw new RuntimeException(exception);
+        }
     }
 }
