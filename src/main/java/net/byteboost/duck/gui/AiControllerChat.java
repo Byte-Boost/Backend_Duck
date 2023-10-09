@@ -34,7 +34,7 @@ public class AiControllerChat implements Initializable {
     @FXML
     private VBox chat;
     @FXML
-    private Button test;
+    private Button btn_new_file;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,10 +70,10 @@ public class AiControllerChat implements Initializable {
 
             }
         });
-        test.setOnAction(new EventHandler<ActionEvent>() {
+        btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/register.fxml","teste",null);
+                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",null);
             }
         });
     }
