@@ -7,10 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.byteboost.duck.gui.AiControllerChat;
-import net.byteboost.duck.gui.RegisterController;
-import net.byteboost.duck.gui.UploadController;
-import net.byteboost.duck.models.User;
 
 
 import java.io.IOException;
