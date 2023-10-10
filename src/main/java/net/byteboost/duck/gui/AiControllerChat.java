@@ -33,6 +33,8 @@ public class AiControllerChat implements Initializable {
     private TextField tf_question;
     @FXML
     private VBox chat;
+    @FXML
+    private Button btn_new_file;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,6 +68,12 @@ public class AiControllerChat implements Initializable {
 
                 chat.getChildren().add(hBoxResponse);
 
+            }
+        });
+        btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",null);
             }
         });
     }
