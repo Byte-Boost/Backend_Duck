@@ -28,6 +28,8 @@ public class UploadController implements Initializable {
     private Button btn_next;
     @FXML
     private Button btn_back;
+    @FXML
+    private Button btn_registry;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btn_upload.setOnAction(new EventHandler<ActionEvent>() {
@@ -63,5 +65,13 @@ public class UploadController implements Initializable {
             GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
         }
     });
+
+    btn_registry.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            GUIUtils.changeScene(event, "/fxml/registry.fxml","Duck - Registry",null);
+        }
+    });
+
     }
 }
