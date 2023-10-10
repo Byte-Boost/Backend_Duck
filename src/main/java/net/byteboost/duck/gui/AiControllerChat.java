@@ -33,8 +33,6 @@ public class AiControllerChat implements Initializable {
     private TextField tf_question;
     @FXML
     private VBox chat;
-    @FXML
-    private Button test;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,12 +66,6 @@ public class AiControllerChat implements Initializable {
 
                 chat.getChildren().add(hBoxResponse);
 
-            }
-        });
-        test.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/register.fxml","teste",null);
             }
         });
     }
