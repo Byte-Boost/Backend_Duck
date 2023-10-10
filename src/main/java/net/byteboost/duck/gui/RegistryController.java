@@ -1,11 +1,15 @@
 package net.byteboost.duck.gui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.GUIUtils;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -17,9 +21,11 @@ import java.util.ResourceBundle;
 import static net.byteboost.duck.utils.DBUtils.getActivityInfo;
 import static net.byteboost.duck.utils.DBUtils.getConnection;
 
-public class RegisterController implements Initializable {
+public class RegistryController implements Initializable {
     @FXML
     private VBox register;
+    @FXML
+    private Button btn_back;
 
     private static final User localuser = LoginController.user;
     @Override
@@ -27,11 +33,23 @@ public class RegisterController implements Initializable {
 
         register.setSpacing(10);
         for (int i = 0 ;i < getActivitySize();i++){
-            Label registry = new Label("Titulo do documento: "+ getActivityInfo("document_title","registry_id", i+1) + " | " + " acessado por : " + localuser.getUsername() +  " | " + "Na data: " + getActivityInfo("access_date","registry_id",i+1) );
+            Label registryTitle = new Label("Titulo: " + getActivityInfo("document_title", "registry_id", i+1));
+            Label registryUser = new Label("User: " + localuser.getUsername());
+            Label registryDate = new Label("Data: " + getActivityInfo("access_date","registry_id",i+1));
             HBox hBox = new HBox();
-            hBox.getChildren().add(registry);
+            hBox.getChildren().add(registryDate);
+            hBox.getChildren().add(registryUser);
+            hBox.getChildren().add(registryTitle);
+            hBox.setSpacing(40);
             register.getChildren().add(hBox);
         }
+
+        btn_back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload", null);
+            }
+        });
     }
     int getActivitySize(){
         String sql = "SELECT COUNT(*) FROM activity_register";
