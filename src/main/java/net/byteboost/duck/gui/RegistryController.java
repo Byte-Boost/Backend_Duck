@@ -33,9 +33,9 @@ public class RegistryController implements Initializable {
 
         register.setSpacing(10);
         for (int i = 0 ;i < getActivitySize();i++){
-            Label registryTitle = new Label("Titulo: " + getActivityInfo("document_title", "registry_id", i+1));
+            Label registryTitle = new Label("Title: " + getActivityInfo("document_title", "registry_id", i+1));
             Label registryUser = new Label("User: " + localuser.getUsername());
-            Label registryDate = new Label("Data: " + getActivityInfo("access_date","registry_id",i+1));
+            Label registryDate = new Label("Date: " + getActivityInfo("access_date","registry_id",i+1));
             HBox hBox = new HBox();
             hBox.getChildren().add(registryDate);
             hBox.getChildren().add(registryUser);
