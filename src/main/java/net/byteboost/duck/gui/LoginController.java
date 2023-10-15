@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -25,6 +26,8 @@ public class LoginController implements Initializable {
     private Button btn_login;
     @FXML
     private Button btn_register;
+    @FXML
+    private Label error402;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -34,6 +37,9 @@ public class LoginController implements Initializable {
             public void handle(ActionEvent event) {
                 user = new User(tf_username.getText(),pf_password.getText());
                 DBUtils.logInUser(event,user);
+                tf_username.getStyleClass().add("not-filled");
+                pf_password.getStyleClass().add("not-filled");
+                error402.setText("One or more fields are wrong");
             }
         });
         btn_register.setOnAction(new EventHandler<ActionEvent>() {

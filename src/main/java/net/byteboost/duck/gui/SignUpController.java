@@ -49,13 +49,19 @@ public class SignUpController implements Initializable {
 
                         pf_confirm.getStyleClass().add("not-filled");
                         pf_password.getStyleClass().add("not-filled");
-                        lb_notfilled.setText("Erro! As senhas não coincidem.");
+                        tf_username.getStyleClass().remove("not-filled");
+                        lb_notfilled.setText("Error! Fields don't match.");
                         System.out.println(confirm + "," + password);
 
                         System.out.println("Erro! As senhas não coincidem.");
                     }
                 } else {
                     System.out.println("Erro! Os campos se encontram vazios.");
+                    lb_notfilled.setText("Error! One or more fields are empty.");
+                    tf_username.getStyleClass().add("not-filled");
+                    pf_confirm.getStyleClass().add("not-filled");
+                    pf_password.getStyleClass().add("not-filled");
+
                 }
             }
         });
