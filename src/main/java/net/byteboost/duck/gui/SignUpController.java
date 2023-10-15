@@ -8,14 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import net.byteboost.duck.utils.DButils;
-import net.byteboost.duck.utils.GUIutils;
+import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.DBUtils;
+import net.byteboost.duck.utils.GUIUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class RegisterController implements Initializable {
+public class SignUpController implements Initializable {
     @FXML
     private TextField tf_username;
     @FXML
@@ -41,28 +42,33 @@ public class RegisterController implements Initializable {
 
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
-//                                DButils.addUser(tf_username.getText(),password);
-                                GUIutils.changeScene(event,"/fxml/login.fxml","Duck - Login",tf_username.getText(),pf_password.getText(),null);
-
+                        DBUtils.addUser(new User(tf_username.getText(),password));
+                        GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
 
                     } else {
 
                         pf_confirm.getStyleClass().add("not-filled");
                         pf_password.getStyleClass().add("not-filled");
-                        lb_notfilled.setText("Erro! As senhas não coincidem.");
+                        tf_username.getStyleClass().remove("not-filled");
+                        lb_notfilled.setText("Error! Fields don't match.");
                         System.out.println(confirm + "," + password);
 
                         System.out.println("Erro! As senhas não coincidem.");
                     }
                 } else {
                     System.out.println("Erro! Os campos se encontram vazios.");
+                    lb_notfilled.setText("Error! One or more fields are empty.");
+                    tf_username.getStyleClass().add("not-filled");
+                    pf_confirm.getStyleClass().add("not-filled");
+                    pf_password.getStyleClass().add("not-filled");
+
                 }
             }
         });
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIutils.changeScene(event, "/fxml/login.fxml","Duck - Login",null,null,null);
+                GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login",null);
             }
         });
     }
