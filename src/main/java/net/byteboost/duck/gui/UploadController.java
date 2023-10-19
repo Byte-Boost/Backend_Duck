@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UploadController implements Initializable {
-    private static Document doc;
+    public static Document doc;
     public static File selectedFile;
     @FXML
     private Label selectedFileField;

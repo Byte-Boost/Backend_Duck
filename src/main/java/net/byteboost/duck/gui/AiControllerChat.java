@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class AiControllerChat implements Initializable {
     private static final User localuser = LoginController.user;
-    private static Document doc;
+    private static Document doc = UploadController.doc;
 
     @FXML
     private Button btn_send;
