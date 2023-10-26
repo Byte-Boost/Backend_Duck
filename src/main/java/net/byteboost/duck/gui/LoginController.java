@@ -1,10 +1,8 @@
 package net.byteboost.duck.gui;
 
-import com.sun.javafx.scene.control.behavior.ToggleButtonBehavior;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -19,9 +17,6 @@ import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
-import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -68,11 +63,8 @@ public class LoginController implements Initializable {
                 if (btn_password.isSelected()) {
 
                     InputStream stream = null;
-                    try {
-                        stream = new FileInputStream("C:\\Users\\jhuan\\Documentos\\GitHub\\Duck\\Frontend_Duck\\resources\\images\\eye-opened.png");
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    stream = getClass().getResourceAsStream("/images/eye-open.png");
+                    assert stream != null;
                     Image image = new Image(stream);
 
                     shownPassword.setVisible(true);
@@ -84,11 +76,8 @@ public class LoginController implements Initializable {
                 else {
 
                     InputStream stream = null;
-                    try {
-                        stream = new FileInputStream("C:\\Users\\jhuan\\Documentos\\GitHub\\Duck\\Frontend_Duck\\resources\\images\\eye-closed.png");
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    stream = getClass().getResourceAsStream("/images/eye-closed.png");
+                    assert stream != null;
                     Image image = new Image(stream);
 
                     shownPassword.setVisible(false);
