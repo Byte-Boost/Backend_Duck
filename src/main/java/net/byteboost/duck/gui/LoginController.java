@@ -66,11 +66,8 @@ public class LoginController implements Initializable {
                 if (btn_password.isSelected()) {
 
                     InputStream stream = null;
-                    try {
-                        stream = new FileInputStream("C:\\Users\\jhuan\\Documentos\\GitHub\\Duck\\Frontend_Duck\\resources\\images\\eye-opened.png");
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    stream = getClass().getResourceAsStream("/images/eye-opened.png");
+                    assert stream != null;
                     Image image = new Image(stream);
 
                     shownPassword.setVisible(true);
@@ -82,11 +79,8 @@ public class LoginController implements Initializable {
                 else {
 
                     InputStream stream = null;
-                    try {
-                        stream = new FileInputStream("C:\\Users\\jhuan\\Documentos\\GitHub\\Duck\\Frontend_Duck\\resources\\images\\eye-closed.png");
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    stream = getClass().getResourceAsStream("/images/eye-closed.png");
+                    assert stream != null;
                     Image image = new Image(stream);
 
                     shownPassword.setVisible(false);
