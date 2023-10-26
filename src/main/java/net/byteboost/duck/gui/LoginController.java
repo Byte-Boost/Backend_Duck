@@ -48,6 +48,8 @@ public class LoginController implements Initializable {
     }
     @FXML
     private Label error402;
+    @FXML
+    private Button btn_forget;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -115,6 +117,15 @@ public class LoginController implements Initializable {
             }
         });
 
-        };
+
+
+
+        btn_forget.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIUtils.changeScene(event,"/fxml/forgetpassword.fxml", "Duck - Password Retrival", null);
+            }
+        });
+    };
     }
 
