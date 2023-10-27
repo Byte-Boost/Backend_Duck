@@ -5,8 +5,8 @@ package net.byteboost.duck.keys;
  */
 
 public class DBKeys {
-    private static String SQLUser = "";
-    private static String SQLPassword = "";
+    private static String SQLUser = System.getenv("DUCK_DB_USER");
+    private static String SQLPassword = System.getenv("DUCK_DB_PASSWORD");
 
     private static String SQLDatabase = "jdbc:mysql://localhost:3306/duck";
 
