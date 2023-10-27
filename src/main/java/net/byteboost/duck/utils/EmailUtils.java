@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EmailUtils {
-    public static void sendMail(String recipient) throws Exception {
+    public static void sendMail(String recipient, String subject, String htmlContent) throws Exception {
     System.out.println("Preparing to send email");
     Properties properties = new Properties();
 
@@ -33,20 +33,19 @@ public class EmailUtils {
     });
 
     //Prepare email message
-    Message message = prepareMessage(session, myAccountEmail, recipient);
+    Message message = prepareMessage(session, myAccountEmail, recipient, subject, htmlContent);
 
     //Send mail
     Transport.send(message);
     System.out.println("Message sent successfully");
 }
 
-    private static Message prepareMessage(Session session, String myAccountEmail, String recipient) {
+    private static Message prepareMessage(Session session, String myAccountEmail, String recipient, String subject, String htmlCode) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            message.setSubject("Assunto do email");
-            String htmlCode = "<h1> titulo </h1> <p> o código é <b>123523</b> </p>";
+            message.setSubject(subject);
             message.setContent(htmlCode, "text/html");
             return message;
         } catch (Exception ex) {
