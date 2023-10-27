@@ -42,7 +42,6 @@ public class SignUpController implements Initializable {
 
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
-                        //DBUtils.addUser(new User(tf_username.getText(),password));
                         GUIUtils.changeScene(event,"/fxml/confirmpage.fxml","Duck - Confirmation",null);
 
                     } else {

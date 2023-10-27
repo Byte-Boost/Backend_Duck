@@ -41,8 +41,14 @@ public class ConfirmationPageController implements Initializable {
         btn_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(Objects.equals(tf_code.getText(), String.valueOf(randomCode)));
-                //GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login",null);
+                if (tf_code.getText().equals(String.valueOf(randomCode))) {
+                    System.out.println("Sucesso! O Código está correto");
+
+                    //DBUtils.addUser(new User(SignUpController.signupUsername.getText(), SignUpController.signupPassword.getText()));
+                    GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login",null);
+                } else {
+                    System.out.println("Erro! Os códigos não coincidem.");
+                }
             }
         });
     }
