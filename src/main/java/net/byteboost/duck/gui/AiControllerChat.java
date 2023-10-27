@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.AIUtils;
 import javafx.scene.control.Button;
@@ -49,19 +50,21 @@ public class AiControllerChat implements Initializable {
 
                 //Criação de labels pergunta no chat
                 chat.setSpacing(10);
-                Label question = new Label(tf_question.getText());
+                Text question = new Text(tf_question.getText());
+                question.setWrappingWidth(200);
                 HBox hBoxQuestion = new HBox();
 
                 hBoxQuestion.getChildren().add(question);
                 hBoxQuestion.setAlignment(Pos.BASELINE_RIGHT);
-                hBoxQuestion.setStyle("-fx-padding:0 30 0 0");
+                hBoxQuestion.setStyle("-fx-border: 12px");
+                hBoxQuestion.setStyle("-fx-padding:0 10 0 0");
 
                 chat.getChildren().add(hBoxQuestion);
 
                 //Criação de labels resposta do bot no chat
-                Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
+                Text response = new Text(AIUtils.loadIntoHugging(doc, tf_question.getText()));
                 HBox hBoxResponse = new HBox();
-
+                response.setWrappingWidth(200);
                 hBoxResponse.getChildren().add(response);
                 hBoxResponse.setAlignment(Pos.BASELINE_LEFT);
                 hBoxResponse.setStyle("-fx-padding:0 30 0 0");
