@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 
 public class SignUpController implements Initializable {
+    public static User user;
     @FXML
     private TextField tf_username;
     @FXML
@@ -42,6 +43,7 @@ public class SignUpController implements Initializable {
 
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
+                        user = new User(tf_username.getText(),password);
                         GUIUtils.changeScene(event,"/fxml/confirmpage.fxml","Duck - Confirmation",null);
 
                     } else {
