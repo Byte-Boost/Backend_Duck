@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.GUIUtils;
 
 import java.io.File;
@@ -53,7 +52,7 @@ public class UploadController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             if (selectedFile != null) {
-                GUIUtils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat",doc);
+                GUIUtils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat");
             }
 
         }
@@ -62,14 +61,14 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
+            GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login");
         }
     });
 
     btn_registry.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIUtils.changeScene(event, "/fxml/registry.fxml","Duck - Registry",null);
+            GUIUtils.changeScene(event, "/fxml/registry.fxml","Duck - Registry");
         }
     });
 

@@ -24,7 +24,7 @@ public class ForgetPasswordController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login", null);
+                GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login");
             }
         });
 

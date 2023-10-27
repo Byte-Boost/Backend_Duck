@@ -102,7 +102,7 @@ public class LoginController implements Initializable {
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
+                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register");
             }
         });
 
@@ -112,7 +112,7 @@ public class LoginController implements Initializable {
         btn_forget.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/forgetpassword.fxml", "Duck - Password Retrival", null);
+                GUIUtils.changeScene(event,"/fxml/forgetpassword.fxml", "Duck - Password Retrival");
             }
         });
     };

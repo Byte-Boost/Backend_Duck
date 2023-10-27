@@ -5,15 +5,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -34,7 +30,7 @@ public class ConfirmationPageController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
+                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register");
             }
         });
 
@@ -44,7 +40,7 @@ public class ConfirmationPageController implements Initializable {
                 if (tf_code.getText().equals(String.valueOf(randomCode))) {
                     System.out.println("Sucesso! O Código está correto");
                     DBUtils.addUser(SignUpController.user);
-                    GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login",null);
+                    GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login");
                 } else {
                     System.out.println("Erro! Os códigos não coincidem.");
                 }

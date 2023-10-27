@@ -12,7 +12,6 @@ import javafx.scene.text.Text;
 import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.AIUtils;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import net.byteboost.duck.utils.DBUtils;
@@ -26,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class AiControllerChat implements Initializable {
     private static final User localuser = LoginController.user;
-    private static Document doc = UploadController.doc;
+    private static final Document doc = UploadController.doc;
 
     @FXML
     private Button btn_send;
@@ -76,7 +75,7 @@ public class AiControllerChat implements Initializable {
         btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload",null);
+                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
             }
         });
     }

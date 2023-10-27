@@ -50,7 +50,7 @@ public class DBUtils {
                 while (rspassword.next()){
                     String retrievedpassword = rspassword.getString("password");
                     if (retrievedpassword.equals(user.getPassword())){
-                        GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload", null);
+                        GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
                     }else {
                         System.out.println("password does not match username");
                     }
