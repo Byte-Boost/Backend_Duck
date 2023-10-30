@@ -60,8 +60,8 @@ public class LoginController implements Initializable {
             public void handle(ActionEvent event) {
                 if (btn_password.isSelected()) {
 
-                    InputStream stream = null;
-                    stream = getClass().getResourceAsStream("/images/eye-open.png");
+                    InputStream stream;
+                    stream = getClass().getResourceAsStream("/images/eye-opened.png");
                     assert stream != null;
                     Image image = new Image(stream);
 
@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
                 }
                 else {
 
-                    InputStream stream = null;
+                    InputStream stream;
                     stream = getClass().getResourceAsStream("/images/eye-closed.png");
                     assert stream != null;
                     Image image = new Image(stream);
@@ -100,7 +100,7 @@ public class LoginController implements Initializable {
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
+                GUIUtils.changeScene(event, "/fxml/password_change.fxml","Duck - Register",null);
             }
         });
 
