@@ -34,6 +34,24 @@ public class DBUtils {
             throw new RuntimeException(exception);
         }
     }
+    public static void changeAccountPassword(User user, String newPassword){
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?;";
+        try {
+
+            Connection connection =  getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, String.valueOf(user.getId()));
+            stmt.execute();
+            stmt.close();
+            connection.close();
+
+        }
+        catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
     public static void logInUser(ActionEvent event, User user){
         Connection connection = null;
         PreparedStatement stmt = null;
