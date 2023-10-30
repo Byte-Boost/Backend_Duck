@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import net.byteboost.duck.Main;
 import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.GUIUtils;
 
@@ -43,6 +44,7 @@ public class SignUpController implements Initializable {
                     if (confirm.equals(password)) {
                         System.out.println("Sucesso! As senhas coincidem.");
                         user = new User(tf_username.getText(),password);
+                        Main.redirectedFrom = "signup";
                         GUIUtils.changeScene(event,"/fxml/confirmpage.fxml","Duck - Confirmation");
 
                     } else {

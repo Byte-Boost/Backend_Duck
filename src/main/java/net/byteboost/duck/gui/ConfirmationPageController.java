@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import net.byteboost.duck.Main;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.EmailUtils;
 import net.byteboost.duck.utils.GUIUtils;
@@ -31,8 +32,18 @@ public class ConfirmationPageController implements Initializable {
         + randomCode +
         "</h1> </td> </tr> </table> </td> </tr> <tr> <td bgcolor=\"#dc5618\" style=\"padding: 20px;\"> <table border=\"0\" width=\"600px\" cellpadding=\"0\" cellspacing=\"0\"> <tr> <td width=\"78%\"> <span style=\"color: #fff;\">Click on the icons to the side to learn more about<br>our project. </span> </td> <td> <a href=\"https://byte-boost-team-website.vercel.app/\"> <img src=\"https://raw.githubusercontent.com/Byte-Boost/ByteBoost.team_website/main/app/favicon.ico\" alt=\"Logo Byte-Boost\" width=\"40px\"> </a> </td> <td> <a href=\"https://github.com/Byte-Boost/Duck\"> <img src=\"https://github.githubassets.com/favicons/favicon.svg\" alt=\"Logo Github\"> </a> </td> </tr> </table> </td> </tr> </table> </td> </tr> </table> </body> </html>";
 
+        String email;
+        String subject;
+        if(Main.redirectedFrom == "login"){
+            email = ForgetPasswordController.email;
+            subject = "Your Duck Registration Code";
+        } else {
+            email = SignUpController.user.getUsername();
+            subject = "Your Password Reset Code";
+        }
+
         try {
-            EmailUtils.sendMail(SignUpController.user.getUsername(), "Your Duck Confirmation Code", emailContent);
+            EmailUtils.sendMail(email, subject, emailContent);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -49,7 +60,12 @@ public class ConfirmationPageController implements Initializable {
             public void handle(ActionEvent event) {
                 if (tf_code.getText().equals(String.valueOf(randomCode))) {
                     System.out.println("Sucesso! O Código está correto");
-                    DBUtils.addUser(SignUpController.user);
+                    if (Main.redirectedFrom == "signup"){
+                        DBUtils.addUser(SignUpController.user);
+                    } else {
+                        // Redirects to "changePassword" page
+                        System.out.println("*Redirect needed*");
+                    }
                     GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login");
                 } else {
                     System.out.println("Erro! Os códigos não coincidem.");
