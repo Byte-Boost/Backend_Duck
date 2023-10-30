@@ -100,7 +100,7 @@ public class LoginController implements Initializable {
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/password_change.fxml","Duck - Register",null);
+                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
             }
         });
 
