@@ -62,6 +62,7 @@ public class LoginController implements Initializable {
             public void handle(ActionEvent event) {
                 if (btn_password.isSelected()) {
 
+
                     InputStream stream = null;
                     stream = getClass().getResourceAsStream("/images/eye-open.png");
                     assert stream != null;
