@@ -70,7 +70,7 @@ public class PasswordChangeController implements Initializable {
                 if (btn_view.isSelected()) {
 
                     InputStream stream;
-                    stream = getClass().getResourceAsStream("/images/eye-opened.png");
+                    stream = getClass().getResourceAsStream("/images/eye-open.png");
                     assert stream != null;
                     Image image = new Image(stream);
 
@@ -85,7 +85,7 @@ public class PasswordChangeController implements Initializable {
                 else {
 
                     InputStream stream;
-                    stream = getClass().getResourceAsStream("/images/eye-opened.png");
+                    stream = getClass().getResourceAsStream("/images/eye-open.png");
                     assert stream != null;
                     Image image = new Image(stream);
 
