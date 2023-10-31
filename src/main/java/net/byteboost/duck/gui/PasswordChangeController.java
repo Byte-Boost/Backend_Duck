@@ -104,7 +104,8 @@ public class PasswordChangeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (pf_insertPassword.getText().equals(pf_confirmPassword.getText())) {
-                    GUIUtils.changeScene(event, "/fxml/login.fxml", "Duck - Login", null);
+                    DBUtils.changeAccountPassword(new User(ForgetPasswordController.email,null), pf_confirmPassword.getText());
+                    GUIUtils.changeScene(event, "/fxml/login.fxml", "Duck - Login");
                 }
 
                 else {
@@ -118,7 +119,7 @@ public class PasswordChangeController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/login.fxml", "Duck - Login", null);
+                GUIUtils.changeScene(event, "/fxml/login.fxml", "Duck - Login");
             }
         });
     };

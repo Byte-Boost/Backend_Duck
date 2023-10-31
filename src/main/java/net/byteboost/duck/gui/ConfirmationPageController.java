@@ -27,6 +27,7 @@ public class ConfirmationPageController implements Initializable {
 
         Random random = new Random();
         int randomCode = random.nextInt(1000000,9000000);
+        System.out.println(randomCode);
         String emailContent =
         "<!DOCTYPE html> <html lang=\"pt-br\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>Email Confirmation</title> </head> <body style=\"margin: 0; padding:0; font-family: Arial, Helvetica, sans-serif;\" > <table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"> <tr> <td> <table align=\"center\" border=\"0\" width=\"0px\" cellpadding=\"0\" cellspacing=\"0\"> <tr bgcolor=\"#18dca4\" align=\"center\"> <td style=\"padding: 10px;\"> <img src=\"https://github.com/Byte-Boost/Frontend_Duck/blob/5750f1a70815a246b94045c42eca58411efd246d/resources/images/ducklogoround.png?raw=true\" alt=\"Logo Duck\" width=\"80px\" margin=\"40px\"> </td> </tr> <tr> <td bgcolor=\"#fff\" align=\"center\"> <table border=\"0\" width=\"600px\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding: 15px; color: #002f71;\" > <tr align=\"center\"> <td> <h1>Email Confirmation</h1> <span>Please use the following access token, and prove it's really you!</span> </td> </tr> </table> <table border=\"0\" width=\"600px\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding: 0px;\"> <tr> <td align=\"center\"> <h1>"
         + randomCode +
@@ -51,7 +52,11 @@ public class ConfirmationPageController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register");
+                if (Main.redirectedFrom == "signup"){
+                    GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register");
+                } else {
+                    GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login");
+                }
             }
         });
 
@@ -64,7 +69,7 @@ public class ConfirmationPageController implements Initializable {
                         DBUtils.addUser(SignUpController.user);
                     } else {
                         // Redirects to "changePassword" page
-                        System.out.println("*Redirect needed*");
+                        GUIUtils.changeScene(event, "/fxml/passwordchange.fxml","Duck - Password Change");
                     }
                     GUIUtils.changeScene(event, "/fxml/login.fxml","Duck - Login");
                 } else {
