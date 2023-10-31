@@ -43,6 +43,8 @@ public class LoginController implements Initializable {
     }
     @FXML
     private Label error402;
+    @FXML
+    private Button btn_forget;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -60,8 +62,9 @@ public class LoginController implements Initializable {
             public void handle(ActionEvent event) {
                 if (btn_password.isSelected()) {
 
-                    InputStream stream;
-                    stream = getClass().getResourceAsStream("/images/eye-opened.png");
+
+                    InputStream stream = null;
+                    stream = getClass().getResourceAsStream("/images/eye-open.png");
                     assert stream != null;
                     Image image = new Image(stream);
 
@@ -73,7 +76,7 @@ public class LoginController implements Initializable {
                 }
                 else {
 
-                    InputStream stream;
+                    InputStream stream = null;
                     stream = getClass().getResourceAsStream("/images/eye-closed.png");
                     assert stream != null;
                     Image image = new Image(stream);
@@ -100,10 +103,19 @@ public class LoginController implements Initializable {
         btn_register.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register",null);
+                GUIUtils.changeScene(event, "/fxml/signup.fxml","Duck - Register");
             }
         });
 
-        };
+
+
+
+        btn_forget.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIUtils.changeScene(event,"/fxml/forgetpassword.fxml", "Duck - Password Retrival");
+            }
+        });
+    };
     }
 

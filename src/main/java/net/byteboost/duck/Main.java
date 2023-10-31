@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class Main extends Application{
+    public static String redirectedFrom = "";
 
     public static void main(String[] args) {
         launch(args);

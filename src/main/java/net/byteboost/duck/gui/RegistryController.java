@@ -47,7 +47,7 @@ public class RegistryController implements Initializable {
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload", null);
+                GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
             }
         });
     }
