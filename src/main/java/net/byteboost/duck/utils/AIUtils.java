@@ -2,18 +2,34 @@ package net.byteboost.duck.utils;
 
 import dev.langchain4j.chain.ConversationalRetrievalChain;
 import dev.langchain4j.data.document.Document;
-import dev.langchain4j.data.document.splitter.ParagraphSplitter;
+import dev.langchain4j.data.document.DocumentSplitter;
+import dev.langchain4j.data.document.splitter.DocumentByParagraphSplitter;
+import dev.langchain4j.data.document.splitter.DocumentSplitters;
+import dev.langchain4j.data.embedding.Embedding;
+import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.huggingface.HuggingFaceChatModel;
 import dev.langchain4j.model.huggingface.HuggingFaceEmbeddingModel;
+import dev.langchain4j.model.huggingface.HuggingFaceModelName;
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.retriever.EmbeddingStoreRetriever;
+import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import net.byteboost.duck.keys.ApiKeys;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static java.time.Duration.ofSeconds;
+import static java.util.stream.Collectors.joining;
 
 public class AIUtils {
     public static String loadIntoHugging(Document file, String question){
@@ -25,16 +41,16 @@ public class AIUtils {
                 .timeout(ofSeconds(60))
                 .build();
 
+
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
-
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .splitter(new ParagraphSplitter())
+                .documentSplitter(DocumentSplitters.recursive(100, 10))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();
-        ingestor.ingest(file);
 
+        ingestor.ingest(file);
 
         ConversationalRetrievalChain chain = ConversationalRetrievalChain.builder()
                 .chatLanguageModel(HuggingFaceChatModel.withAccessToken(ApiKeys.HF_API_KEY))
@@ -46,3 +62,4 @@ public class AIUtils {
         return chain.execute(question);
     }
 }
+

@@ -142,4 +142,26 @@ public class DBUtils {
         return "No info found";
     }
 
+    public static String getUsername(String user_id){
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            stmt = connection.prepareStatement("SELECT username from users where user_id=?");
+            stmt.setInt(1, Integer.parseInt(user_id));
+            rs = stmt.executeQuery();
+            if(!rs.isBeforeFirst()){
+                System.out.println("User not found");
+
+            }else {
+                rs.next();
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "No info found";
+    }
 }

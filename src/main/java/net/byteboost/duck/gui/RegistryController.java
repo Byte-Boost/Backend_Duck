@@ -18,8 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static net.byteboost.duck.utils.DBUtils.getActivityInfo;
-import static net.byteboost.duck.utils.DBUtils.getConnection;
+import static net.byteboost.duck.utils.DBUtils.*;
 
 public class RegistryController implements Initializable {
     @FXML
@@ -34,7 +33,7 @@ public class RegistryController implements Initializable {
         register.setSpacing(10);
         for (int i = 0 ;i < getActivitySize();i++){
             Label registryTitle = new Label("Title: " + getActivityInfo("document_title", "registry_id", i+1));
-            Label registryUser = new Label("User: " + localuser.getUsername());
+            Label registryUser = new Label("User: " + getUsername(getActivityInfo("user_id", "registry_id", i+1)));
             Label registryDate = new Label("Date: " + getActivityInfo("access_date","registry_id",i+1));
             HBox hBox = new HBox();
             hBox.getChildren().add(registryDate);
