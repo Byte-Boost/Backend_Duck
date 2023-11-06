@@ -10,16 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.byteboost.duck.models.User;
+import net.byteboost.duck.utils.AIUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UploadController implements Initializable {
-    private static Document doc;
+    public static Document doc;
     public static File selectedFile;
+    public static InputStream stream;
     @FXML
     private Label selectedFileField;
     @FXML
@@ -41,10 +42,13 @@ public class UploadController implements Initializable {
                 );
                 Stage currentStage = (Stage) selectedFileField.getScene().getWindow();
                 selectedFile = fileChooser.showOpenDialog(currentStage);
+                try {
+                    stream = new FileInputStream(selectedFile.getPath());
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                doc = FileSystemDocumentLoader.loadDocument(AIUtils.formatText(selectedFile.getPath()));
 
-                doc = FileSystemDocumentLoader.loadDocument(selectedFile.getPath());
-
-                //For now, it'll only display its own name.
                 selectedFileField.setText(selectedFile.getName());
 
             }
@@ -53,7 +57,7 @@ public class UploadController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             if (selectedFile != null) {
-                GUIUtils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat",doc);
+                GUIUtils.changeScene(event,"/fxml/aichat.fxml","Duck - Chat");
             }
 
         }
@@ -62,14 +66,14 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login",null);
+            GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login");
         }
     });
 
     btn_registry.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            GUIUtils.changeScene(event, "/fxml/registry.fxml","Duck - Registry",null);
+            GUIUtils.changeScene(event, "/fxml/registry.fxml","Duck - Registry");
         }
     });
 

@@ -21,8 +21,13 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
-    implementation 'dev.langchain4j:langchain4j:0.21.0'
+    implementation 'dev.langchain4j:langchain4j:0.23.0'
+    implementation 'dev.langchain4j:langchain4j-hugging-face:0.23.0'
     implementation 'com.mysql:mysql-connector-j:8.1.0'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'com.sun.activation:javax.activation:1.2.0'
+    implementation 'org.apache.tika:tika-core:2.9.1'
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'
 }
 
 application {

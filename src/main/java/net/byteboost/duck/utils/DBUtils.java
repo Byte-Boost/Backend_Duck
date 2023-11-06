@@ -34,6 +34,24 @@ public class DBUtils {
             throw new RuntimeException(exception);
         }
     }
+    public static void changeAccountPassword(User user, String newPassword){
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?;";
+        try {
+
+            Connection connection =  getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, String.valueOf(user.getId()));
+            stmt.execute();
+            stmt.close();
+            connection.close();
+
+        }
+        catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
     public static void logInUser(ActionEvent event, User user){
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -50,7 +68,7 @@ public class DBUtils {
                 while (rspassword.next()){
                     String retrievedpassword = rspassword.getString("password");
                     if (retrievedpassword.equals(user.getPassword())){
-                        GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload", null);
+                        GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
                     }else {
                         System.out.println("password does not match username");
                     }
@@ -124,4 +142,26 @@ public class DBUtils {
         return "No info found";
     }
 
+    public static String getUsername(String user_id){
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            stmt = connection.prepareStatement("SELECT username from users where user_id=?");
+            stmt.setInt(1, Integer.parseInt(user_id));
+            rs = stmt.executeQuery();
+            if(!rs.isBeforeFirst()){
+                System.out.println("User not found");
+
+            }else {
+                rs.next();
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "No info found";
+    }
 }
