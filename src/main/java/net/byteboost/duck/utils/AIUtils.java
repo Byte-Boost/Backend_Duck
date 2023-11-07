@@ -63,7 +63,7 @@ public class AIUtils {
                 // .promptTemplate() // you can override default prompt template
                 .build();
 
-        return chain.execute(question);
+        return chain.execute(question).trim().isEmpty()? "Sorry, i have no response available for that question." : chain.execute(question).trim();
     }
     public static Path formatText(String path) {
         //Inspired by Mateus Madeira's code in https://github.com/C0demain/API-2-semestre/blob/master/bot/lib/src/main/java/utilitarios/LimpaArquivo.java
@@ -81,19 +81,19 @@ public class AIUtils {
                 dir = path.replace(".txt", "_cleaned.txt");
                 parser.parse(stream, handler, metadata, context);
                 doccontent = handler.toString();
-                System.out.println(handler.toString());
+                System.out.println("\nFormatted TXT file to TXT");
             }
             else if (checkPDF(selectedFile)){
                 dir = path.replace(".pdf", "_cleaned.txt");
                 parser.parse(stream, handler, metadata, context);
                 doccontent = handler.toString();
-                System.out.println(handler.toString());
+                System.out.println("\nFormatted PDF file to TXT");
             }
             else if (checkDOCX(selectedFile)) {
                 dir = path.replace(".docx", "_cleaned.txt");
                 parser.parse(stream, handler, metadata, context);
                 doccontent = handler.toString();
-                System.out.println(handler.toString());
+                System.out.println("\nFormatted DOCX file to TXT");
             }
             stream.close();
 

@@ -43,9 +43,12 @@ public class AiControllerChat implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
+                System.out.println("\nCHAT INITIATED\n");
+
                 //Adiciona registro da pergunta no banco
                 if (!tf_question.getText().trim().isEmpty()) {
                     DBUtils.AddRegistry(localuser.getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
+                    System.out.println("Interaction added to User History" );
                 }
 
                 //Criação de labels pergunta no chat
@@ -64,6 +67,8 @@ public class AiControllerChat implements Initializable {
 
                 chat.getChildren().add(hBoxQuestion);
 
+                System.out.println("Message sent: " + tf_question.getText());
+
                 //Criação de labels resposta do bot no chat
                 Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
                 HBox hBoxResponse = new HBox();
@@ -78,6 +83,7 @@ public class AiControllerChat implements Initializable {
                 hBoxResponse.setStyle("-fx-padding:0 0 0 5");
 
                 chat.getChildren().add(hBoxResponse);
+                System.out.println("Response received: " + response.getText() + "\n");
 
             }
         });
