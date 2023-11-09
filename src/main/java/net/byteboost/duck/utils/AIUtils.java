@@ -62,8 +62,8 @@ public class AIUtils {
                 // .chatMemory() // you can override default chat memory
                 // .promptTemplate() // you can override default prompt template
                 .build();
-
-        return chain.execute(question).trim().isEmpty()? "Sorry, i have no response available for that question." : chain.execute(question).trim();
+        String response = chain.execute(question).trim();
+        return response.isEmpty()? "Sorry, I have no response available for that question." : response;
     }
     public static Path formatText(String path) {
         //Inspired by Mateus Madeira's code in https://github.com/C0demain/API-2-semestre/blob/master/bot/lib/src/main/java/utilitarios/LimpaArquivo.java
