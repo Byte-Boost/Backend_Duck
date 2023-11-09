@@ -1,6 +1,7 @@
 package net.byteboost.duck.gui;
 
 import dev.langchain4j.data.document.Document;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
 
+import java.io.InterruptedIOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -27,6 +29,8 @@ import java.util.ResourceBundle;
 public class AiControllerChat implements Initializable {
     private static final User localuser = LoginController.user;
     private static final Document doc = UploadController.doc;
+
+    int i = 1;
 
     @FXML
     private Button btn_send;
@@ -39,11 +43,10 @@ public class AiControllerChat implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("\nCHAT INITIATED\n");
         btn_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                System.out.println("\nCHAT INITIATED\n");
 
                 //Adiciona registro da pergunta no banco
                 if (!tf_question.getText().trim().isEmpty()) {
@@ -67,24 +70,35 @@ public class AiControllerChat implements Initializable {
 
                 chat.getChildren().add(hBoxQuestion);
 
-                System.out.println("Message sent: " + tf_question.getText());
 
-                //Criação de labels resposta do bot no chat
-                Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
-                HBox hBoxResponse = new HBox();
 
-                response.getStylesheets().add("css/main.css");
-                response.getStyleClass().add("response");
-                response.setWrapText(true);
-                response.setMaxWidth(200);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
 
-                hBoxResponse.getChildren().add(response);
-                hBoxResponse.setAlignment(Pos.BASELINE_LEFT);
-                hBoxResponse.setStyle("-fx-padding:0 0 0 5");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                HBox hBoxResponse = new HBox();
 
-                chat.getChildren().add(hBoxResponse);
-                System.out.println("Response received: " + response.getText() + "\n");
+                                response.getStylesheets().add("css/main.css");
+                                response.getStyleClass().add("response");
+                                response.setWrapText(true);
+                                response.setMaxWidth(200);
 
+                                hBoxResponse.getChildren().add(response);
+                                hBoxResponse.setAlignment(Pos.BASELINE_LEFT);
+                                hBoxResponse.setStyle("-fx-padding:0 0 0 5");
+
+                                chat.getChildren().add(hBoxResponse);
+                                System.out.println("("+i+") - " + "Message received: " + tf_question.getText() );
+                                System.out.println("("+i+") - " + "Response sent: " + response.getText() + System.lineSeparator());
+                                i = i+1;
+                            }
+                        });
+                    }
+                }).start();
             }
         });
         btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
