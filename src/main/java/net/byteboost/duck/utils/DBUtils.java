@@ -16,40 +16,47 @@ public class DBUtils {
         }
     }
 
-    public static void addUser(User user){
-        String sql = "INSERT INTO users(username,password) VALUES(?,?)";
+    public static void addUser(User user) {
+        String sql = "INSERT INTO users(username,password,salt) VALUES(?,?,?)";
         try {
+
+            String salt = PasswordEncryptionUtils.getSalt();
+            String EncryptedPass = PasswordEncryptionUtils.getEncryptedPassword(user.getPassword(), salt);
 
             Connection connection =  getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
+            stmt.setString(2, EncryptedPass);
+            stmt.setString(3, salt);
             stmt.execute();
             stmt.close();
             connection.close();
 
         }
-        catch (SQLException exception) {
-            throw new RuntimeException(exception);
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     public static void changeAccountPassword(User user, String newPassword){
         String sql = "UPDATE users SET password = ? WHERE user_id = ?;";
         try {
 
+            String salt = DBUtils.getUserSalt(user.getUsername());
+            String encryptedPassword = PasswordEncryptionUtils.getEncryptedPassword(newPassword, salt);
+
             Connection connection =  getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setString(1, newPassword);
+            stmt.setString(1, encryptedPassword);
             stmt.setString(2, String.valueOf(user.getId()));
             stmt.execute();
             stmt.close();
             connection.close();
 
         }
-        catch (SQLException exception) {
-            throw new RuntimeException(exception);
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     public static void logInUser(ActionEvent event, User user){
@@ -58,7 +65,7 @@ public class DBUtils {
         ResultSet rspassword = null;
         try {
             connection = getConnection();
-            stmt = connection.prepareStatement("SELECT password from users where username=?");
+            stmt = connection.prepareStatement("SELECT password, salt from users where username=?");
             stmt.setString(1, user.getUsername());
             rspassword = stmt.executeQuery();
 
@@ -66,8 +73,10 @@ public class DBUtils {
                 System.out.println("User not found");
             }else {
                 while (rspassword.next()){
-                    String retrievedpassword = rspassword.getString("password");
-                    if (retrievedpassword.equals(user.getPassword())){
+                    String salt = rspassword.getString("salt");
+                    String EncryptedInput = PasswordEncryptionUtils.getEncryptedPassword(user.getPassword(), salt);
+                    String retrievedPassword = rspassword.getString("password");
+                    if (retrievedPassword.equals(EncryptedInput)){
                         GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
                     }else {
                         System.out.println("password does not match username");
@@ -75,7 +84,7 @@ public class DBUtils {
                 }
             }
 
-        }catch(SQLException e){
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             if (rspassword != null){
@@ -141,17 +150,34 @@ public class DBUtils {
         }
         return "No info found";
     }
-
     public static String getUsername(String user_id){
 
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         try {
-            connection = getConnection();
-            stmt = connection.prepareStatement("SELECT username from users where user_id=?");
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT username from users where user_id=?");
             stmt.setInt(1, Integer.parseInt(user_id));
-            rs = stmt.executeQuery();
+
+            ResultSet rs = stmt.executeQuery();
+            if(!rs.isBeforeFirst()){
+                System.out.println("User not found");
+
+            }else {
+                rs.next();
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "No info found";
+    }
+
+    public static String getUserSalt(String username){
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("select salt from users where username=?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
             if(!rs.isBeforeFirst()){
                 System.out.println("User not found");
 
