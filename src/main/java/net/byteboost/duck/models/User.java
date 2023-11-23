@@ -1,7 +1,5 @@
 package net.byteboost.duck.models;
 
-import net.byteboost.duck.utils.GUIUtils;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

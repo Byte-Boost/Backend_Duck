@@ -13,8 +13,6 @@ import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;

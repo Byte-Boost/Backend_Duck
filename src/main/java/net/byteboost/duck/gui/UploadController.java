@@ -66,6 +66,7 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
+            LoginController.setUser(null);
             GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login");
         }
     });

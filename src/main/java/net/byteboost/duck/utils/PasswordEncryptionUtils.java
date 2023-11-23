@@ -1,7 +1,5 @@
 package net.byteboost.duck.utils;
 
-import org.apache.pdfbox.tools.Encrypt;
-
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

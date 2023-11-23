@@ -10,8 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.AIUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -20,18 +18,14 @@ import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
 
-import java.io.InterruptedIOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AiControllerChat implements Initializable {
-    private static final User localuser = LoginController.user;
-    private static final Document doc = UploadController.doc;
-
+    private static Document doc = UploadController.doc;
     int i = 1;
-
     @FXML
     private Button btn_send;
     @FXML
@@ -50,7 +44,7 @@ public class AiControllerChat implements Initializable {
 
                 //Adiciona registro da pergunta no banco
                 if (!tf_question.getText().trim().isEmpty()) {
-                    DBUtils.AddRegistry(localuser.getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
+                    DBUtils.AddRegistry(LoginController.getUser().getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
                     System.out.println("Interaction added to User History" );
                 }
 

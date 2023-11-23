@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import net.byteboost.duck.models.RegistryEntry;
-import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
@@ -21,8 +20,6 @@ public class RegistryController implements Initializable {
     private VBox register;
     @FXML
     private Button btn_back;
-
-    private static final User localuser = LoginController.user;
     private HBox addNewRow(String date, String user, String title){
         Label registryDate = new Label("Date: " + date);
         Label registryUser = new Label("User: " + user);
@@ -36,10 +33,9 @@ public class RegistryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         register.setSpacing(10);
-        for (RegistryEntry entry : DBUtils.getUserHistory(localuser.getUsername())) {
-            addNewRow(entry.getAccess(), localuser.getUsername(), entry.getTitle());
+        for (RegistryEntry entry : DBUtils.getUserHistory(LoginController.getUser().getUsername())) {
+            addNewRow(entry.getAccess(), LoginController.getUser().getUsername(), entry.getTitle());
         }
 
         btn_back.setOnAction(new EventHandler<ActionEvent>() {
