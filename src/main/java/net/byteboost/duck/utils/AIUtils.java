@@ -30,6 +30,7 @@ import static net.byteboost.duck.gui.UploadController.selectedFile;
 import static net.byteboost.duck.gui.UploadController.stream;
 import static net.byteboost.duck.utils.FileUtils.*;
 
+
 public class AIUtils {
     public static String loadIntoHugging(Document file, String question){
 
@@ -44,7 +45,7 @@ public class AIUtils {
         EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 
         EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
-                .documentSplitter(DocumentSplitters.recursive(200,0))
+                .documentSplitter(DocumentSplitters.recursive(2500,0))
                 .embeddingModel(embeddingModel)
                 .embeddingStore(embeddingStore)
                 .build();
@@ -58,6 +59,7 @@ public class AIUtils {
                 // .promptTemplate() // you can override default prompt template
                 .build();
         String response = chain.execute(question).trim();
+        response = response.replace("&#10;", "\n");
         return response.isEmpty()? "Sorry, I have no response available for that question." : response;
     }
     public static Path formatText(String path) {
@@ -120,6 +122,7 @@ public class AIUtils {
             throw new RuntimeException(e);
         }
         return null;
+
     }
 
 }
