@@ -1,5 +1,6 @@
 package net.byteboost.duck.gui;
 
+import com.sun.jdi.event.ExceptionEvent;
 import dev.langchain4j.data.document.Document;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,8 +18,8 @@ import javafx.scene.control.TextField;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
-
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -98,6 +99,13 @@ public class AiControllerChat implements Initializable {
         btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                try {
+                    Files.delete(UploadController.path);
+                }
+                catch (Exception e){
+                    throw new RuntimeException(e);
+                };
+
                 GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
             }
         });
