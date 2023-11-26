@@ -15,10 +15,14 @@ import net.byteboost.duck.utils.GUIUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class UploadController implements Initializable {
     public static Document doc;
+
+    public static Path path;
     public static File selectedFile;
     public static InputStream stream;
     @FXML
@@ -47,7 +51,9 @@ public class UploadController implements Initializable {
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                doc = FileSystemDocumentLoader.loadDocument(AIUtils.formatText(selectedFile.getPath()));
+                path = AIUtils.formatText(selectedFile.getPath());
+                doc = FileSystemDocumentLoader.loadDocument(path);
+
 
                 selectedFileField.setText(selectedFile.getName());
 
@@ -66,6 +72,7 @@ public class UploadController implements Initializable {
     btn_back.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
+            LoginController.setUser(null);
             GUIUtils.changeScene(event,"/fxml/login.fxml","Duck - Login");
         }
     });

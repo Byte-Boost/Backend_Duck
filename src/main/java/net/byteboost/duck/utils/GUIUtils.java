@@ -1,6 +1,5 @@
 package net.byteboost.duck.utils;
 
-import dev.langchain4j.data.document.Document;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

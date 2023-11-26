@@ -1,6 +1,8 @@
 package net.byteboost.duck.gui;
 
+import com.sun.jdi.event.ExceptionEvent;
 import dev.langchain4j.data.document.Document;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,8 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import net.byteboost.duck.models.User;
 import net.byteboost.duck.utils.AIUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -18,16 +18,15 @@ import javafx.scene.control.TextField;
 import net.byteboost.duck.utils.DBUtils;
 import net.byteboost.duck.utils.GUIUtils;
 
-
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AiControllerChat implements Initializable {
-    private static final User localuser = LoginController.user;
-    private static final Document doc = UploadController.doc;
-
+    private static Document doc = UploadController.doc;
+    int i = 1;
     @FXML
     private Button btn_send;
     @FXML
@@ -39,15 +38,14 @@ public class AiControllerChat implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("\nCHAT INITIATED\n");
         btn_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                System.out.println("\nCHAT INITIATED\n");
-
                 //Adiciona registro da pergunta no banco
                 if (!tf_question.getText().trim().isEmpty()) {
-                    DBUtils.AddRegistry(localuser.getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
+                    DBUtils.AddRegistry(LoginController.getUser().getId(), UploadController.selectedFile.getName(), Date.valueOf(String.valueOf(LocalDate.now()) ));
                     System.out.println("Interaction added to User History" );
                 }
 
@@ -67,29 +65,47 @@ public class AiControllerChat implements Initializable {
 
                 chat.getChildren().add(hBoxQuestion);
 
-                System.out.println("Message sent: " + tf_question.getText());
 
-                //Criação de labels resposta do bot no chat
-                Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
-                HBox hBoxResponse = new HBox();
 
-                response.getStylesheets().add("css/main.css");
-                response.getStyleClass().add("response");
-                response.setWrapText(true);
-                response.setMaxWidth(200);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Label response = new Label(AIUtils.loadIntoHugging(doc, tf_question.getText()));
 
-                hBoxResponse.getChildren().add(response);
-                hBoxResponse.setAlignment(Pos.BASELINE_LEFT);
-                hBoxResponse.setStyle("-fx-padding:0 0 0 5");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                HBox hBoxResponse = new HBox();
 
-                chat.getChildren().add(hBoxResponse);
-                System.out.println("Response received: " + response.getText() + "\n");
+                                response.getStylesheets().add("css/main.css");
+                                response.getStyleClass().add("response");
+                                response.setWrapText(true);
+                                response.setMaxWidth(200);
 
+                                hBoxResponse.getChildren().add(response);
+                                hBoxResponse.setAlignment(Pos.BASELINE_LEFT);
+                                hBoxResponse.setStyle("-fx-padding:0 0 0 5");
+
+                                chat.getChildren().add(hBoxResponse);
+                                System.out.println("("+i+") - " + "Message received: " + tf_question.getText() );
+                                System.out.println("("+i+") - " + "Response sent: " + response.getText() + System.lineSeparator());
+                                i = i+1;
+                            }
+                        });
+                    }
+                }).start();
             }
         });
         btn_new_file.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                try {
+                    Files.delete(UploadController.path);
+                }
+                catch (Exception e){
+                    throw new RuntimeException(e);
+                };
+
                 GUIUtils.changeScene(event,"/fxml/upload.fxml","Duck - Upload");
             }
         });

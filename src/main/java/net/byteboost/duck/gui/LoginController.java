@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    public static User user;
+    private static User user;
     @FXML
     private TextField tf_username;
     @FXML
@@ -37,6 +37,14 @@ public class LoginController implements Initializable {
     private ToggleButton btn_password;
     @FXML
     private ImageView login_eye;
+
+    public static User getUser(){
+        return user;
+    }
+    public static void setUser(User userInput){
+        user = userInput;
+    }
+
     @FXML
     void pf_passwordKeyTyped(KeyEvent event) {
         shownPassword.textProperty().bind(Bindings.concat(pf_password.getText()));
@@ -93,7 +101,7 @@ public class LoginController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                user = new User(tf_username.getText(),pf_password.getText());
+                setUser(new User(tf_username.getText(),pf_password.getText()));
                 DBUtils.logInUser(event,user);
                 tf_username.getStyleClass().add("not-filled");
                 pf_password.getStyleClass().add("not-filled");
