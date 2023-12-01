@@ -134,8 +134,7 @@ public class DBUtils {
 
             stmt.setString(1, username);
             try(ResultSet rs = stmt.executeQuery()) {
-                if (!rs.isBeforeFirst()) throw new SQLException("User not found");
-
+                if (!rs.isBeforeFirst()) return null;
                 rs.next();
                 return rs.getString("user_id");
             }
@@ -143,7 +142,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "No info found";
+        return null;
     }
     public static String getUserSalt(String username){
         String sql = "select salt from users where username=?";
